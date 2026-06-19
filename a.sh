@@ -7,7 +7,7 @@ WEBAPP_DIR="$TEST_DIR/webapp"
 TOMCAT_WEBAPPS="/opt/lampp/apache-tomcat-10.0.16/webapps"
 
 # Mise à jour pour le Sprint 1
-FRAMEWORK_JAR="$WEBAPP_DIR/WEB-INF/lib/sprint1.jar"   
+FRAMEWORK_JAR="$WEBAPP_DIR/WEB-INF/lib/sprint2.jar"   
 APP_WAR="$TEST_DIR/test.war"
 
 echo "🚀 Déploiement du projet de test depuis le bon dossier..."
@@ -17,9 +17,9 @@ mkdir -p "$WEBAPP_DIR/WEB-INF/lib"
 
 # 2. Vérification de la présence du framework
 if [ -f "$FRAMEWORK_JAR" ]; then
-    echo "✅ sprint1.jar est bien présent dans webapp/WEB-INF/lib/"
+    echo "✅ sprint2.jar est bien présent dans webapp/WEB-INF/lib/"
 else
-    echo "⚠️ Attention : Aucun sprint1.jar trouvé dans webapp/WEB-INF/lib/"
+    echo "⚠️ Attention : Aucun sprint2.jar trouvé dans webapp/WEB-INF/lib/"
     echo "Vérifiez s'il est présent ou copiez-le avant de continuer."
     exit 1
 fi

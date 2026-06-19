@@ -4,9 +4,10 @@ import annotation.Controller;
 import annotation.RequestMapping;
 
 @Controller
-public class EmployerController {
-    @RequestMapping("/test/qwertq")
-    public void liste() {
+public class Bbb {
+
+    @RequestMapping("/test/qqqq")
+    public void test() {
         System.out.println("test");
     }
 }
