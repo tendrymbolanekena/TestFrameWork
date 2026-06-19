@@ -6,8 +6,8 @@ TEST_DIR="$BASE_DIR"
 WEBAPP_DIR="$TEST_DIR/webapp"
 TOMCAT_WEBAPPS="/opt/lampp/apache-tomcat-10.0.16/webapps"
 
-SERVLET_JAR="/usr/share/java/servlet-api.jar" # Votre API javax
-FRAMEWORK_JAR="$WEBAPP_DIR/WEB-INF/lib/sprint0.jar"   # Le JAR généré à la racine de FrameWork
+# Mise à jour pour le Sprint 1
+FRAMEWORK_JAR="$WEBAPP_DIR/WEB-INF/lib/sprint1.jar"   
 APP_WAR="$TEST_DIR/test.war"
 
 echo "🚀 Déploiement du projet de test depuis le bon dossier..."
@@ -15,31 +15,39 @@ echo "🚀 Déploiement du projet de test depuis le bon dossier..."
 # 1. On s'assure que le dossier lib existe dans webapp
 mkdir -p "$WEBAPP_DIR/WEB-INF/lib"
 
-# 2. On récupère le framework.jar pour le mettre dans le projet test
+# 2. Vérification de la présence du framework
 if [ -f "$FRAMEWORK_JAR" ]; then
-    cp "$FRAMEWORK_JAR" "$WEBAPP_DIR/WEB-INF/lib/"
-    echo "✅ sprint0.jar copié dans webapp/WEB-INF/lib/"
+    echo "✅ sprint1.jar est bien présent dans webapp/WEB-INF/lib/"
 else
-    echo "⚠️ Attention : Aucun sprint0.jar trouvé à la racine de FrameWork."
-    echo "Vérifiez s'il est présent ou compilez-le avant de continuer."
+    echo "⚠️ Attention : Aucun sprint1.jar trouvé dans webapp/WEB-INF/lib/"
+    echo "Vérifiez s'il est présent ou copiez-le avant de continuer."
+    exit 1
 fi
 
-# 3. Compilation du code source de test (s'il y a des fichiers .java dans src)
-if [ -d "$TEST_DIR/src" ] && [ "$(ls -A "$TEST_DIR/src")" ]; then
-    echo "🏗️ Compilation de votre code de test..."
+# 3. Compilation du code source de test (cible src/java)
+if [ -d "$TEST_DIR/src/java" ]; then
+    echo "🏗️ Compilation de vos contrôleurs de test..."
     mkdir -p "$WEBAPP_DIR/WEB-INF/classes"
-    javac -cp "$SERVLET_JAR:$WEBAPP_DIR/WEB-INF/lib/sprint0.jar" -d "$WEBAPP_DIR/WEB-INF/classes" "$TEST_DIR"/src/**/*.java
+    
+    # Compilation en ciblant le bon dossier de controllers et le bon JAR
+    javac -cp "$FRAMEWORK_JAR" -d "$WEBAPP_DIR/WEB-INF/classes" "$TEST_DIR"/src/java/controller/*.java
+    
+    if [ $? -ne 0 ]; then
+        echo "❌ Erreur de compilation !"
+        exit 1
+    fi
 fi
 
 # 4. Création du fichier .WAR
 echo "📦 Création du fichier test.war..."
 cd "$WEBAPP_DIR" || exit
 jar cvf "$APP_WAR" . > /dev/null
+cd "$TEST_DIR" || exit
 
 # 5. Déploiement dans Tomcat XAMPP
 echo "🔥 Envoi vers /opt/lampp/apache-tomcat-10.0.16/webapps..."
 sudo rm -rf "$TOMCAT_WEBAPPS/test"
-sudo rm -f "$TOMCAT_WEBAPPS/test.war"
+sudo rm -f "$TOMCAP_WEBAPPS/test.war"
 sudo cp "$APP_WAR" "$TOMCAT_WEBAPPS/"
 
 echo "🎉 Déploiement terminé !"
