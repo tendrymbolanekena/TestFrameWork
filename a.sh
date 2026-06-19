@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # --- CONFIGURATION STRICTE DES CHEMINS ---
-BASE_DIR="/home/nekena/L2/S4/ProgSys/TestFrameWork"
+BASE_DIR="/home/itu/Music/NEKENA/S4/WEBdinamique/TestFrameWork"
 TEST_DIR="$BASE_DIR"
 WEBAPP_DIR="$TEST_DIR/webapp"
-TOMCAT_WEBAPPS="/opt/lampp/tomcat/webapps"
+TOMCAT_WEBAPPS="/opt/lampp/apache-tomcat-10.0.16/webapps"
 
 SERVLET_JAR="/usr/share/java/servlet-api.jar" # Votre API javax
 FRAMEWORK_JAR="$WEBAPP_DIR/WEB-INF/lib/sprint0.jar"   # Le JAR généré à la racine de FrameWork
@@ -37,7 +37,7 @@ cd "$WEBAPP_DIR" || exit
 jar cvf "$APP_WAR" . > /dev/null
 
 # 5. Déploiement dans Tomcat XAMPP
-echo "🔥 Envoi vers /opt/lampp/tomcat/webapps/..."
+echo "🔥 Envoi vers /opt/lampp/apache-tomcat-10.0.16/webapps..."
 sudo rm -rf "$TOMCAT_WEBAPPS/test"
 sudo rm -f "$TOMCAT_WEBAPPS/test.war"
 sudo cp "$APP_WAR" "$TOMCAT_WEBAPPS/"
