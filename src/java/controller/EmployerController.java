@@ -1,12 +1,12 @@
 package controller;
 
 import annotation.Controller;
-import annotation.RequestMapping;
+import annotation.UrlMapping;
 
 @Controller
 public class EmployerController {
-    @RequestMapping("/test/qwertq")
+    @UrlMapping(path="/liste", methode = "GET")
     public void liste() {
-        System.out.println("test");
+        System.out.println("Liste des employeurs");
     }
 }
