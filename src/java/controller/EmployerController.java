@@ -11,4 +11,10 @@ public class EmployerController {
         System.out.println("Liste des employeurs");
     }
 
+    // @UrlMapping(path="/liste", methode = "GET")
+    // public void listes() {
+    //     System.out.println("Liste 2222222");
+    // }
+
+
 }
