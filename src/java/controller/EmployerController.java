@@ -5,27 +5,10 @@ import annotation.UrlMapping;
 
 @Controller
 public class EmployerController {
-    @UrlMapping(value="/li")
+
+    @UrlMapping(path="/liste", methode = "GET")
     public void liste() {
-        System.out.println("test");
+        System.out.println("Liste des employeurs");
     }
-
-    @UrlMapping("/delete")
-    public void delete() {
-        System.out.println("test");
-    }
-
-    @UrlMapping("/update")
-    public void update() {
-        System.out.println("test");
-    }
-
-    @UrlMapping("/andrana")
-    public void andrana() {
-        System.out.println("test");
-    }
-
-
-
 
 }

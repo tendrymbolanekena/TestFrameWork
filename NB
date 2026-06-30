@@ -1,0 +1,1 @@
+tail -f /var/log/tomcat*/catalina.out 2>/dev/null || tail -f /opt/lampp/tomcat/logs/catalina.out
