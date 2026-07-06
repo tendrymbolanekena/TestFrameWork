@@ -2,13 +2,18 @@ package controller;
 
 import annotation.Controller;
 import annotation.UrlMapping;
+import view.*;
+import java.util.List;
 
 @Controller
 public class EmployerController {
 
     @UrlMapping(path="/liste", methode = "GET")
-    public void liste() {
-        System.out.println("Liste des employeurs");
+    public void liste(ModelAndView modelAndView) {
+
+        System.out.println("liste");
+        modelAndView.setViewName("accueil");
+        modelAndView.setAttribute("employers", "nnnna");
     }
 
     // @UrlMapping(path="/liste", methode = "GET")
