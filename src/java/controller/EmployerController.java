@@ -7,6 +7,7 @@ import java.util.List;
 import annotation.ToJson;
 import java.util.Vector;
 import annotation.Param;
+import model.Employer;
 
 @Controller
 public class EmployerController {
@@ -31,5 +32,26 @@ public class EmployerController {
        modelAndView.setAttribute("message", message);
 
        return modelAndView;
+    }
+
+    @UrlMapping(path="/listeJson", methode="POST") 
+    @ToJson
+    public ModelAndView listeJson(@Param("id") int id , @Param("message") String message) { 
+       ModelAndView modelAndView = new ModelAndView();      
+       System.out.println("listeJson");
+       modelAndView.setViewName("accueil");
+       modelAndView.setAttribute("employers", id);
+       modelAndView.setAttribute("message", message);
+
+       return modelAndView;
+    }
+
+    @UrlMapping(path = "/ajouter", methode = "POST")
+    @ToJson
+    public ModelAndView ajouter(Employer employer) {
+        ModelAndView mv = new ModelAndView("accueil");
+        mv.setAttribute("nom", employer.getNom());
+        mv.setAttribute("poste", employer.getPoste());
+        return mv;
     }
 }

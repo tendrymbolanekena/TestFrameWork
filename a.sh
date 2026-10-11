@@ -1,58 +1,59 @@
+
 #!/bin/bash
 
-# --- CONFIGURATION STRICTE DES CHEMINS ---
+# Configuration des chemins
 BASE_DIR="$(cd "$(dirname "$0")" && pwd)"
 TEST_DIR="$BASE_DIR"
 WEBAPP_DIR="$TEST_DIR/webapp"
 TOMCAT_WEBAPPS="/opt/lampp/tomcat/webapps"
 
-# Mise à jour pour le Sprint 1
-FRAMEWORK_JAR="$WEBAPP_DIR/WEB-INF/lib/sprint7.jar"   
+FRAMEWORK_JAR="$WEBAPP_DIR/WEB-INF/lib/sprint7bis.jar"
 APP_WAR="$TEST_DIR/test.war"
 
-echo " Déploiement du projet de test depuis le bon dossier..."
+echo "Déploiement du projet TestFrameWork..."
 
-# 1. On s'assure que le dossier lib existe dans webapp
-mkdir -p "$WEBAPP_DIR/WEB-INF/lib"
-
-# 2. Vérification de la présence du framework
-if [ -f "$FRAMEWORK_JAR" ]; then
-    echo " sprint7.jar est bien présent dans webapp/WEB-INF/lib/"
-else
-    echo " Attention : Aucun sprint7.jar trouvé dans webapp/WEB-INF/lib/"
-    echo "Vérifiez s'il est présent ou copiez-le avant de continuer."
+# 1. Vérifier le JAR
+if [ ! -f "$FRAMEWORK_JAR" ]; then
+    echo "Erreur : JAR introuvable : $FRAMEWORK_JAR"
     exit 1
 fi
 
-# 3. Compilation du code source de test (cible src/java)
-if [ -d "$TEST_DIR/src/java" ]; then
-    echo " Compilation de vos contrôleurs de test..."
-    mkdir -p "$WEBAPP_DIR/WEB-INF/classes"
-    
-    # Compilation en ciblant le bon dossier de controllers et le bon JAR
-    javac -cp "$FRAMEWORK_JAR" -d "$WEBAPP_DIR/WEB-INF/classes" "$TEST_DIR"/src/java/controller/*.java
-    
-    if [ $? -ne 0 ]; then
-        echo "Erreur de compilation !"
-        exit 1
-    fi
+# 2. Créer le dossier des classes
+mkdir -p "$WEBAPP_DIR/WEB-INF/classes"
+
+# 3. Compiler les contrôleurs de test
+echo "Compilation des contrôleurs..."
+
+javac -cp "$FRAMEWORK_JAR" \
+      -d "$WEBAPP_DIR/WEB-INF/classes" \
+      "$TEST_DIR"/src/java/*/*.java
+
+if [ $? -ne 0 ]; then
+    echo "Erreur de compilation !"
+    exit 1
 fi
 
-# 4. Création du fichier .WAR
-echo " Création du fichier test.war..."
-cd "$WEBAPP_DIR" || exit
+# 4. Créer le WAR
+echo "Création de test.war..."
+
+cd "$WEBAPP_DIR" || exit 1
 jar cvf "$APP_WAR" . > /dev/null
-cd "$TEST_DIR" || exit
+cd "$TEST_DIR" || exit 1
 
-# 5. Déploiement dans Tomcat XAMPP
-echo " Envoi vers /opt/lampp/apache-tomcat-10.0.16/webapps..."
+if [ ! -f "$APP_WAR" ]; then
+    echo "Erreur : test.war n'a pas été créé."
+    exit 1
+fi
+
+# 5. Déployer dans Tomcat
+echo "Déploiement dans $TOMCAT_WEBAPPS..."
+
 sudo rm -rf "$TOMCAT_WEBAPPS/test"
-sudo rm -f "$TOMCAP_WEBAPPS/test.war"
-sudo cp "$APP_WAR" "$TOMCAT_WEBAPPS/"
-
-
+sudo rm -f "$TOMCAT_WEBAPPS/test.war"
+sudo cp "$APP_WAR" "$TOMCAT_WEBAPPS/test.war"
 
 echo "Déploiement terminé !"
-echo "URL à tester : http://localhost:8080/test/aaaaaaa"
+echo "URL : http://localhost:8080/test/"
 
- tail -f /opt/lampp/tomcat/logs/catalina.out
+# 6. Suivre les logs
+tail -f /opt/lampp/tomcat/logs/catalina.out
