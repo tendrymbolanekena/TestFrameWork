@@ -7,7 +7,8 @@ TEST_DIR="$BASE_DIR"
 WEBAPP_DIR="$TEST_DIR/webapp"
 TOMCAT_WEBAPPS="/opt/lampp/tomcat/webapps"
 
-FRAMEWORK_JAR="$WEBAPP_DIR/WEB-INF/lib/sprint7bis.jar"
+FRAMEWORK_JAR="$WEBAPP_DIR/WEB-INF/lib/sprint8.jar"
+GSON_JAR="$BASE_DIR/../FrameWork/src/lib/gson-2.13.1.jar"
 APP_WAR="$TEST_DIR/test.war"
 
 echo "Déploiement du projet TestFrameWork..."
@@ -17,6 +18,13 @@ if [ ! -f "$FRAMEWORK_JAR" ]; then
     echo "Erreur : JAR introuvable : $FRAMEWORK_JAR"
     exit 1
 fi
+
+# Gson est utilisé par le framework pour sérialiser les réponses JSON.
+if [ ! -f "$GSON_JAR" ]; then
+    echo "Erreur : JAR Gson introuvable : $GSON_JAR"
+    exit 1
+fi
+cp "$GSON_JAR" "$WEBAPP_DIR/WEB-INF/lib/"
 
 # 2. Créer le dossier des classes
 mkdir -p "$WEBAPP_DIR/WEB-INF/classes"

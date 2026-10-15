@@ -49,9 +49,9 @@ public class EmployerController {
     @UrlMapping(path = "/ajouter", methode = "POST")
     @ToJson
     public ModelAndView ajouter(Employer employer) {
-        ModelAndView mv = new ModelAndView("accueil");
-        mv.setAttribute("nom", employer.getNom());
-        mv.setAttribute("poste", employer.getPoste());
-        return mv;
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setAttribute("fichier", employer.getPhoto());
+
+        return modelAndView;
     }
 }

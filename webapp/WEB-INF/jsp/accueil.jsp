@@ -31,10 +31,20 @@
             margin: 5px;
             padding: 8px;
         }
+
+        .champ {
+            margin: 15px 0;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+
         <p>Valeur de l'attribut 'employers' :
             <span class="data">${employers}</span>
         </p>
@@ -44,15 +54,38 @@
 
         <h2>Tester l'envoi d'un objet Employer</h2>
 
-        <form action="ajouter" method="post" data-object="Employer">
-            <label>Nom :</label>
-            <input type="text" name="nom" placeholder="Entrez le nom" required>
+        <form action="ajouter"
+              method="post"
+              enctype="multipart/form-data"
+              data-object="Employer">
 
-            <label>Poste :</label>
-            <input type="text" name="poste" placeholder="Entrez le poste" required>
+            <div class="champ">
+                <label>Nom :</label>
+                <input type="text"
+                       name="nom"
+                       placeholder="Entrez le nom"
+                       required>
+            </div>
+
+            <div class="champ">
+                <label>Poste :</label>
+                <input type="text"
+                       name="poste"
+                       placeholder="Entrez le poste"
+                       required>
+            </div>
+
+            <div class="champ">
+                <label>Photo :</label>
+                <input type="file"
+                       name="photo"
+                       accept="image/*"
+                       required>
+            </div>
 
             <button type="submit">Envoyer l'objet</button>
         </form>
+
     </div>
 
     <script src="${pageContext.request.contextPath}/FrameWork.js"></script>

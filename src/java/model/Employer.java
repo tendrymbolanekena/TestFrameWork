@@ -1,8 +1,11 @@
 package model;
 
+import util.MapFile;
+
 public class Employer {
     private String nom;
     private String poste;
+    private MapFile photo;
 
     public Employer() {
     }
@@ -21,5 +24,13 @@ public class Employer {
 
     public void setPoste(String poste) {
         this.poste = poste;
+    }
+
+    public MapFile getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(MapFile photo) {
+        this.photo = photo;
     }
 }

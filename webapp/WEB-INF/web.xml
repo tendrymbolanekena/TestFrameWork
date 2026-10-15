@@ -8,6 +8,11 @@
         <listener-class>listener.ListenerController</listener-class>
     </listener>
 
+    <context-param>
+        <param-name>framework.upload.dir</param-name>
+        <param-value>/home/nekena/TestFrameWork/uploads</param-value>
+    </context-param>
+
     <servlet>
         <servlet-name>FrontControllerServlet</servlet-name>
         <servlet-class>controller.FrontControllerServlet</servlet-class>
