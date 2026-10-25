@@ -8,6 +8,8 @@ import annotation.ToJson;
 import java.util.Vector;
 import annotation.Param;
 import model.Employer;
+import util.Mysession;
+import annotation.Auth;
 
 @Controller
 public class EmployerController {
@@ -48,10 +50,21 @@ public class EmployerController {
 
     @UrlMapping(path = "/ajouter", methode = "POST")
     @ToJson
-    public ModelAndView ajouter(Employer employer) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setAttribute("fichier", employer.getPhoto());
+    public Employer ajouter(Employer employer , Mysession mysession) {
+        mysession.add("0", employer.getNom());
+        return employer;
+    }
 
-        return modelAndView;
+
+    @UrlMapping(path = "/s", methode = "GET")
+    @ToJson
+    public Employer getSessionEmployer(Mysession mysession) {
+        return (Employer) mysession.get("0");
+    }
+
+    @UrlMapping(path = "/auth", methode = "GET")
+    @Auth
+    public void auth() {
+        System.out.println("auth");
     }
 }

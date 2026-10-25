@@ -13,6 +13,11 @@
         <param-value>/home/nekena/TestFrameWork/uploads</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>framework.auth.key</param-name>
+        <param-value>0</param-value>
+    </context-param>
+
     <servlet>
         <servlet-name>FrontControllerServlet</servlet-name>
         <servlet-class>controller.FrontControllerServlet</servlet-class>
