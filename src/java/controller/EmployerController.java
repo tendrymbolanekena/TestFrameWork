@@ -9,7 +9,7 @@ import java.util.Vector;
 import annotation.Param;
 import model.Employer;
 import util.Mysession;
-import annotation.Auth;
+import annotation.*;
 
 @Controller
 public class EmployerController {
@@ -52,6 +52,7 @@ public class EmployerController {
     @ToJson
     public Employer ajouter(Employer employer , Mysession mysession) {
         mysession.add("0", employer.getNom());
+        mysession.add("1", "admin");
         return employer;
     }
 
@@ -66,5 +67,12 @@ public class EmployerController {
     @Auth
     public void auth() {
         System.out.println("auth");
+    }
+
+    @UrlMapping(path = "/roles", methode = "GET")
+    @Roles({"admin", "user"})
+    @ToJson
+    public String roles(Mysession mysession) {
+        return mysession.get("1").toString();
     }
 }
